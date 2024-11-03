@@ -25,3 +25,7 @@ func (p *Parallelepiped) Perimetr() float32 {
 func (p *Parallelepiped) Volume() float32 {
 	return float32(p.a) * float32(p.b) * float32(p.c)
 }
+
+func (_ *Parallelepiped) Name() string {
+	return "параллелепипед"
+}

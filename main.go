@@ -12,62 +12,34 @@ import (
 
 type Squarer interface {
 	Square() float32
+	Name() string
 }
 
 type Perimetrer interface {
 	Perimetr() float32
+	Name() string
 }
 
 type Volumer interface {
 	Volume() float32
+	Name() string
 }
 
 func getSquare(figures ...Squarer) {
 	for _, v := range figures {
-		switch res := v.(type) {
-			case *square.Square:
-				fmt.Printf("Это квадрат с площадью %0.2f\n", res.Square())
-			case *rectangle.Rectangle:
-				fmt.Printf("Это прямоугольник с площадью %0.2f\n", res.Square())
-			case *circle.Circle:
-				fmt.Printf("Это круг с площадью %0.2f\n", res.Square())
-			case *parallelepiped.Parallelepiped:
-				fmt.Printf("Это параллелепипед с площадью %0.2f\n", res.Square())
-			case *ball.Ball:
-				fmt.Printf("Это шар с площадью %0.2f\n", res.Square())	
-			case *cube.Cube:
-				fmt.Printf("Это куб с площадью %0.2f\n", res.Square())
-		}
+		fmt.Printf("Это %s с площадью %0.2f\n", v.Name(), v.Square())
 	}
 }
 
 func getPerimetr(figures ...Perimetrer) {
 	for _, v := range figures {
-		switch res := v.(type) {
-			case *square.Square:
-				fmt.Printf("Это квадрат с периметром %0.2f\n", res.Perimetr())
-			case *rectangle.Rectangle:
-				fmt.Printf("Это прямоугольник с периметром %0.2f\n", res.Perimetr())
-			case *circle.Circle:
-				fmt.Printf("Это круг с периметром %0.2f\n", res.Perimetr())
-			case *parallelepiped.Parallelepiped:
-				fmt.Printf("Это параллелепипед с периметром %0.2f\n", res.Perimetr())	
-			case *cube.Cube:
-				fmt.Printf("Это куб с периметром %0.2f\n", res.Perimetr())
-		}
+		fmt.Printf("Это %s с периметром %0.2f\n", v.Name(), v.Perimetr())
 	}
 }
 
 func getVolume(figures ...Volumer) {
 	for _, v := range figures {
-		switch res := v.(type) {
-			case *parallelepiped.Parallelepiped:
-				fmt.Printf("Это параллелепипед с объемом %0.2f\n", res.Volume())
-			case *ball.Ball:
-				fmt.Printf("Это шар с объемом %0.2f\n", res.Volume())
-			case *cube.Cube:
-				fmt.Printf("Это куб с объемом %0.2f\n", res.Volume())
-		}
+		fmt.Printf("Это %s с объемом %0.2f\n", v.Name(), v.Volume())
 	}	
 }
 

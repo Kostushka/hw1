@@ -21,3 +21,7 @@ func (c *Cube) Perimetr() float32 {
 func (c *Cube) Volume() float32 {
 	return float32(c.a) * float32(c.a) * float32(c.a)
 }
+
+func (_ *Cube) Name() string {
+	return "куб"
+}

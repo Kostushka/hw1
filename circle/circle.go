@@ -17,3 +17,7 @@ func (c *Circle) Square() float32 {
 func (c *Circle) Perimetr() float32 {
 	return float32(2) * float32(c.r) * 3.1415926
 }
+
+func (_ *Circle) Name() string {
+	return "круг"
+}

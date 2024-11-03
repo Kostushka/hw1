@@ -17,3 +17,7 @@ func (s *Square) Square() float32 {
 func (s *Square) Perimetr() float32 {
 	return 4.0 * float32(s.a)
 }
+
+func (_ *Square) Name() string {
+	return "квадрат"
+}
