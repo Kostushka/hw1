@@ -6,7 +6,7 @@ type Parallelepiped struct {
 	c int
 }
 
-func GetParallelepiped(a,b,c int) *Parallelepiped {
+func NewParallelepiped(a,b,c int) *Parallelepiped {
 	return &Parallelepiped{
 		a: a,
 		b: b,

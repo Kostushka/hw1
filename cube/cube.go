@@ -4,7 +4,7 @@ type Cube struct {
 	a int
 }
 
-func GetCube(a int) *Cube {
+func NewCube(a int) *Cube {
 	return &Cube{
 		a: a,
 	}

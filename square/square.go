@@ -4,7 +4,7 @@ type Square struct {
 	a int
 }
 
-func GetSquare(a int) *Square {
+func NewSquare(a int) *Square {
 	return &Square{
 		a: a,
 	}

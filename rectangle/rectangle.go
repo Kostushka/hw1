@@ -5,7 +5,7 @@ type Rectangle struct {
 	b int
 }
 
-func GetRectangle(a,b int) *Rectangle {
+func NewRectangle(a,b int) *Rectangle {
 	return &Rectangle{
 		a: a,
 		b: b,

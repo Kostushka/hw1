@@ -4,7 +4,7 @@ type Ball struct {
 	r int
 }
 
-func GetBall(r int) *Ball {
+func NewBall(r int) *Ball {
 	return &Ball{
 		r: r,
 	}

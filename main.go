@@ -10,49 +10,86 @@ import (
 	"homework/cube"
 )
 
-type Squarer interface {
-	Square() float32
+type Figure interface {
 	Name() string
+}
+
+type Squarer interface {
+	Figure
+	Square() float32
 }
 
 type Perimetrer interface {
+	Figure
 	Perimetr() float32
-	Name() string
 }
 
 type Volumer interface {
+	Figure
 	Volume() float32
-	Name() string
 }
 
-func getSquare(figures ...Squarer) {
+func filterSquare(figures []Figure) []Squarer {
+	relevants := []Squarer{}
+	for _, v := range figures {
+		if res, ok := v.(Squarer); ok {
+			relevants = append(relevants, res)
+		}
+	}
+	return relevants
+}
+
+func filterPerimetr(figures []Figure) []Perimetrer {
+	relevants := []Perimetrer{}
+	for _, v := range figures {
+		if res, ok := v.(Perimetrer); ok {
+			relevants = append(relevants, res)
+		}
+	}
+	return relevants
+}
+
+func filterVolume(figures []Figure) []Volumer {
+	relevants := []Volumer{}
+	for _, v := range figures {
+		if res, ok := v.(Volumer); ok {
+			relevants = append(relevants, res)
+		}
+	}
+	return relevants
+}
+
+func printSquare(figures ...Squarer) {
 	for _, v := range figures {
 		fmt.Printf("Это %s с площадью %0.2f\n", v.Name(), v.Square())
 	}
 }
 
-func getPerimetr(figures ...Perimetrer) {
+func printPerimetr(figures ...Perimetrer) {
 	for _, v := range figures {
 		fmt.Printf("Это %s с периметром %0.2f\n", v.Name(), v.Perimetr())
 	}
 }
 
-func getVolume(figures ...Volumer) {
+func printVolume(figures ...Volumer) {
 	for _, v := range figures {
 		fmt.Printf("Это %s с объемом %0.2f\n", v.Name(), v.Volume())
 	}	
 }
 
 func main() {
-	square := square.GetSquare(5)
-	rectangle := rectangle.GetRectangle(2,8)
-	circle := circle.GetCircle(6)
-	parallelepiped := parallelepiped.GetParallelepiped(3,6,9)
-	ball := ball.GetBall(2)
-	cube := cube.GetCube(8)
-	getSquare(square, rectangle, circle, parallelepiped, ball, cube)
+	figures := []Figure{
+		square.NewSquare(5),
+		rectangle.NewRectangle(2,8),
+		circle.NewCircle(6),
+		parallelepiped.NewParallelepiped(3,6,9),
+		ball.NewBall(2),
+		cube.NewCube(8),
+	}
+
+	printSquare(filterSquare(figures)...)
 	fmt.Println()
-	getPerimetr(square, rectangle, circle, parallelepiped, cube)
+	printPerimetr(filterPerimetr(figures)...)
 	fmt.Println()
-	getVolume(parallelepiped, ball, cube)
+	printVolume(filterVolume(figures)...)
 }

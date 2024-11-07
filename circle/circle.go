@@ -4,7 +4,7 @@ type Circle struct {
 	r int
 }
 
-func GetCircle(r int) *Circle {
+func NewCircle(r int) *Circle {
 	return &Circle{
 		r: r,
 	}
