@@ -8,6 +8,7 @@ import (
 	"homework/parallelepiped"
 	"homework/ball"
 	"homework/cube"
+	"time"
 )
 
 type Figure interface {
@@ -29,30 +30,10 @@ type Volumer interface {
 	Volume() float32
 }
 
-func filterSquare(figures []Figure) []Squarer {
-	relevants := []Squarer{}
+func filter[T any](figures []Figure) []T {
+	relevants := []T{}
 	for _, v := range figures {
-		if res, ok := v.(Squarer); ok {
-			relevants = append(relevants, res)
-		}
-	}
-	return relevants
-}
-
-func filterPerimetr(figures []Figure) []Perimetrer {
-	relevants := []Perimetrer{}
-	for _, v := range figures {
-		if res, ok := v.(Perimetrer); ok {
-			relevants = append(relevants, res)
-		}
-	}
-	return relevants
-}
-
-func filterVolume(figures []Figure) []Volumer {
-	relevants := []Volumer{}
-	for _, v := range figures {
-		if res, ok := v.(Volumer); ok {
+		if res, ok := v.(T); ok {
 			relevants = append(relevants, res)
 		}
 	}
@@ -78,18 +59,40 @@ func printVolume(figures ...Volumer) {
 }
 
 func main() {
-	figures := []Figure{
-		square.NewSquare(5),
-		rectangle.NewRectangle(2,8),
-		circle.NewCircle(6),
-		parallelepiped.NewParallelepiped(3,6,9),
-		ball.NewBall(2),
-		cube.NewCube(8),
-	}
+	ch := make(chan []Figure)
+	
+	go func() {
+		var figures []Figure
+		a,b,c := 1,5,7
+		for {
+			figures = []Figure{
+				square.NewSquare(a),
+				rectangle.NewRectangle(b,c),
+				circle.NewCircle(c),
+				parallelepiped.NewParallelepiped(a,b,c),
+				ball.NewBall(b),
+				cube.NewCube(c),
+			}
+			time.Sleep(2 * time.Second)
+			ch <-figures
+			a++
+			b *= 2
+			c += 7
+		}		
+	}()
 
-	printSquare(filterSquare(figures)...)
-	fmt.Println()
-	printPerimetr(filterPerimetr(figures)...)
-	fmt.Println()
-	printVolume(filterVolume(figures)...)
+	go func() {
+		for {
+			figures := <-ch
+
+			fmt.Println("_______________")
+			printSquare(filter[Squarer](figures)...)
+			fmt.Println()
+			printPerimetr(filter[Perimetrer](figures)...)
+			fmt.Println()
+			printVolume(filter[Volumer](figures)...)
+			fmt.Println("_______________")
+		}
+	}()	
+	fmt.Scanf("%s", new(string))
 }
